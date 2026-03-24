@@ -140,35 +140,35 @@ export default function Sidebar() {
           {navItem("/concluidas", "Concluídas", CheckCircle)}
         </nav>
 
-        {/* Rodapé com usuário */}
+       {/* Rodapé com usuário */}
         {user && (
-          <div className="mt-auto transition-all duration-300">
+        <div className="mt-auto transition-all duration-300">
             <div
-              className={`flex items-center gap-3 ${
+            className={`flex items-center gap-3 ${
                 collapsed ? "justify-center" : "justify-start"
-              }`}
-              style={{
-                paddingBottom: "calc(env(safe-area-inset-bottom) + 16px)",
-                paddingLeft: "calc(env(safe-area-inset-left) + 16px)",
-                paddingRight: "calc(env(safe-area-inset-right) + 16px)",
-              }}
+            }`}
+            style={{
+                paddingBottom: "calc(env(safe-area-inset-bottom) + 30px)", 
+                paddingLeft: "calc(env(safe-area-inset-left) + 30px)",
+                paddingRight: "calc(env(safe-area-inset-right) + 30px)",
+            }}
             >
-              <div className="w-8 h-8 rounded-full overflow-hidden">
+            <div className="w-8 h-8 rounded-full overflow-hidden">
                 <img
-                  src={user.avatar}
-                  alt={user.name}
-                  className="w-full h-full object-cover"
+                src={user.avatar}
+                alt={user.name}
+                className="w-full h-full object-cover"
                 />
-              </div>
-              <span
-                className={`transition-opacity duration-300 text-sm ${
-                  collapsed ? "opacity-0 w-0" : "opacity-100 w-full"
-                }`}
-              >
-                {user.name}
-              </span>
             </div>
-          </div>
+            <span
+                className={`transition-opacity duration-300 text-sm ${
+                collapsed ? "opacity-0 w-0" : "opacity-100 w-full"
+                }`}
+            >
+                {user.name}
+            </span>
+            </div>
+        </div>
         )}
       </aside>
     </>
