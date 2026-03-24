@@ -1,6 +1,6 @@
-// src/app/(dashboard)/layout.tsx
-import NewRequestFab from "@/components/NewRequestFab";
 import Sidebar from "@/components/Sidebar";
+import Topbar from "@/components/Topbar";
+import NewRequestFab from "@/components/NewRequestFab";
 
 export default function DashboardLayout({
   children,
@@ -8,12 +8,19 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen w-full">
+    <div className="flex min-h-screen">
+      {/* Sidebar lateral */}
       <Sidebar />
-      <main className="flex-1 bg-gray-50 overflow-x-hidden">
-        {children}
-      </main>
-      <NewRequestFab />
+
+      {/* Área principal */}
+      <div className="flex flex-1 flex-col">
+        <Topbar />
+
+        <main className="flex-1 p-6 relative bg-gray-50">
+          {children}
+          <NewRequestFab />
+        </main>
+      </div>
     </div>
   );
 }
