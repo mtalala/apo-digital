@@ -17,20 +17,24 @@ export default function DashboardLayout({
   // Ocultar botão apenas na página de /solicitacoes
   const showFab = pathname !== "/solicitacoes";
 
+  // Largura da sidebar em px (desktop)
+  const sidebarWidth = collapsed ? 60 : 256; // 5rem ou 16rem
+
   return (
     <div className="flex min-h-screen">
       {/* Sidebar lateral */}
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
 
-      {/* Área principal */}
+      {/* Container que ajusta Topbar e Main */}
       <div
-        className={`flex flex-1 flex-col transition-all duration-300
-          ml-0 md:ml-${collapsed ? "20" : "64"} // Tailwind: w-20 ou w-64 da Sidebar
-        `}
+        className="flex flex-1 flex-col transition-all duration-300 ml-0 md:ml-[var(--sidebar-width)]"
+        style={{ "--sidebar-width": `${sidebarWidth}px` } as React.CSSProperties}
       >
-        <Topbar />
+        {/* Topbar ajustada */}
+        <Topbar sidebarWidth={sidebarWidth} />
 
-        <main className="flex-1 p-6 relative bg-gray-50 transition-all duration-300">
+        {/* Conteúdo principal */}
+        <main className="flex-1 pt-14 p-6 relative bg-gray-50 transition-all duration-300">
           {children}
           {showFab && <NewRequestFab />}
         </main>
