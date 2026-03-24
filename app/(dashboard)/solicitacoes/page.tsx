@@ -103,7 +103,7 @@ export default function SolicitacoesPage() {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-6">Formulário de Solicitações</h1>
+      <h1 className="text-2xl font-bold mb-6">Enviar Nova Solicitação</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Programa */}
         <div>
