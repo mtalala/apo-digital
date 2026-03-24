@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -13,45 +13,57 @@ import {
   X,
 } from "lucide-react";
 
+interface User {
+  name: string;
+  avatar: string; // URL da imagem
+}
+
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
   const pathname = usePathname();
 
-  const navItem = (
-  href: string,
-  label: string,
-  Icon: React.ElementType
-) => {
-  const active = pathname === href;
+  // Placeholder para simular carregamento da API
+  useEffect(() => {
+    // futuramente substituir por fetch('/api/user')
+    setTimeout(() => {
+      setUser({
+        name: "Jane Doe",
+        avatar: "https://i.pravatar.cc/150?img=32",
+      });
+    }, 500);
+  }, []);
 
-  return (
-    <Link
-      href={href}
-      onClick={() => {
-        // Fecha a sidebar apenas no mobile (quando md ainda não está ativo)
-        if (window.innerWidth < 768) {
-          setCollapsed(true);
-        }
-      }}
-      className={`
-        flex items-center overflow-hidden rounded-lg
-        h-16 md:h-11
-        ${collapsed ? "justify-center w-11" : "justify-start w-full px-3 gap-3"}
-        ${active ? "bg-red-600 text-white" : "text-gray-600 hover:bg-gray-100"}
-        transition-all duration-300
-      `}
-    >
-      <Icon className="h-5 w-5 shrink-0" />
-      <span
-        className={`transition-opacity duration-300 text-sm ${
-          collapsed ? "opacity-0 w-0" : "opacity-100 w-full"
-        }`}
+  const navItem = (href: string, label: string, Icon: React.ElementType) => {
+    const active = pathname === href;
+
+    return (
+      <Link
+        href={href}
+        onClick={() => {
+          if (window.innerWidth < 768) {
+            setCollapsed(true);
+          }
+        }}
+        className={`
+          flex items-center overflow-hidden rounded-lg
+          h-16 md:h-11
+          ${collapsed ? "justify-center w-11" : "justify-start w-full px-3 gap-3"}
+          ${active ? "bg-red-600 text-white" : "text-gray-600 hover:bg-gray-100"}
+          transition-all duration-300
+        `}
       >
-        {label}
-      </span>
-    </Link>
-  );
-};
+        <Icon className="h-5 w-5 shrink-0" />
+        <span
+          className={`transition-opacity duration-300 text-sm ${
+            collapsed ? "opacity-0 w-0" : "opacity-100 w-full"
+          }`}
+        >
+          {label}
+        </span>
+      </Link>
+    );
+  };
 
   return (
     <>
@@ -69,13 +81,9 @@ export default function Sidebar() {
           fixed top-0 left-0 h-screen flex flex-col
           border-r border-gray-200 bg-white
           overflow-hidden z-40
-          
-          /* Desktop */
           md:relative md:translate-x-0
           ${collapsed ? "md:w-15" : "md:w-64"}
           transition-all duration-300
-
-          /* Mobile */
           w-full transform
           ${collapsed ? "-translate-x-full" : "translate-x-0"}
         `}
@@ -98,7 +106,7 @@ export default function Sidebar() {
           </button>
         </div>
 
-        {/* Itens superiores com espaçamento do topo no mobile */}
+        {/* Itens superiores */}
         <nav
           className={`px-2 space-y-1 flex flex-col mt-20 md:mt-0 ${
             collapsed ? "items-center" : "items-start"
@@ -132,28 +140,36 @@ export default function Sidebar() {
           {navItem("/concluidas", "Concluídas", CheckCircle)}
         </nav>
 
-        {/* Rodapé com safe area e padding horizontal/vertical */}
-        <div className="mt-auto transition-all duration-300">
-          <div
-            className={`flex items-center gap-3 ${
-              collapsed ? "justify-center" : "justify-start"
-            }`}
-            style={{
-              paddingBottom: "calc(env(safe-area-inset-bottom) + 16px)", // vertical
-              paddingLeft: "calc(env(safe-area-inset-left) + 16px)",     // horizontal esquerda
-              paddingRight: "calc(env(safe-area-inset-right) + 16px)",   // horizontal direita
-            }}
-          >
-            <div className="w-8 h-8 rounded-full bg-black" />
-            <span
-              className={`transition-opacity duration-300 ${
-                collapsed ? "opacity-0 w-0" : "opacity-100 w-full"
+        {/* Rodapé com usuário */}
+        {user && (
+          <div className="mt-auto transition-all duration-300">
+            <div
+              className={`flex items-center gap-3 ${
+                collapsed ? "justify-center" : "justify-start"
               }`}
+              style={{
+                paddingBottom: "calc(env(safe-area-inset-bottom) + 16px)",
+                paddingLeft: "calc(env(safe-area-inset-left) + 16px)",
+                paddingRight: "calc(env(safe-area-inset-right) + 16px)",
+              }}
             >
-              Jane Doe
-            </span>
+              <div className="w-8 h-8 rounded-full overflow-hidden">
+                <img
+                  src={user.avatar}
+                  alt={user.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <span
+                className={`transition-opacity duration-300 text-sm ${
+                  collapsed ? "opacity-0 w-0" : "opacity-100 w-full"
+                }`}
+              >
+                {user.name}
+              </span>
+            </div>
           </div>
-        </div>
+        )}
       </aside>
     </>
   );
