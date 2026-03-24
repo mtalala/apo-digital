@@ -12,7 +12,7 @@ export default function NewRequestFab() {
         fixed
         bottom-6
         right-6
-        z-50
+        z-30
         flex
         h-14
         w-14

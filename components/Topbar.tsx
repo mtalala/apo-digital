@@ -6,19 +6,19 @@ export default function Topbar() {
   return (
     <header
       className="
-        h-14
         w-full
         flex
         items-center
-        border-b
-        border-gray-200
+        border-b border-gray-200
         bg-white
         px-6
+        h-14
       "
+      style={{
+        paddingTop: "env(safe-area-inset-top)",
+      }}
     >
-      {/* Logo */}
-      <div className="flex items-center gap-2">
-        {/* Substitua por sua logo real */}
+      <div className="flex items-center gap-2 ml-auto md:ml-0">
         <Image
           src="/logomack.png"
           alt="Logo"

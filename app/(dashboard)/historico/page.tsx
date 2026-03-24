@@ -1,12 +1,9 @@
 // src/app/historico/page.tsx
-
 import { requests } from "@/data/requests";
 
 export default function HistoricoPage() {
   const historyRequests = requests
-    .filter(
-      (req) => req.status === "Concluída" && req.completedAt
-    )
+    .filter((req) => req.status === "Concluída" && req.completedAt)
     .sort(
       (a, b) =>
         new Date(b.completedAt!).getTime() -
@@ -14,25 +11,21 @@ export default function HistoricoPage() {
     );
 
   return (
-    <main className="flex-1 p-6">
+    <main className="flex-1 px-2 sm:px-4 py-2 sm:py-4">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-gray-900">
-          Histórico
-        </h1>
+        <h1 className="text-2xl font-semibold text-gray-900">Histórico</h1>
       </div>
 
       {/* Grid */}
       {historyRequests.length === 0 ? (
-        <p className="text-gray-500 text-sm">
-          Nenhuma solicitação concluída.
-        </p>
+        <p className="text-gray-500 text-sm">Nenhuma solicitação concluída.</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[1400px] mx-auto">
           {historyRequests.map((request) => (
             <div
               key={request.id}
-              className="bg-white rounded-xl border border-gray-200 p-4"
+              className="bg-white rounded-xl border border-gray-200 p-4 w-full"
             >
               {/* Categoria */}
               <span
@@ -47,9 +40,7 @@ export default function HistoricoPage() {
               </h2>
 
               {/* Nível */}
-              <p className="mt-1 text-xs text-gray-500">
-                {request.level}
-              </p>
+              <p className="mt-1 text-xs text-gray-500">{request.level}</p>
 
               {/* Data */}
               <p className="mt-4 text-xs text-gray-400">
