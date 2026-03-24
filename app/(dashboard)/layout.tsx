@@ -24,8 +24,9 @@ export default function DashboardLayout({
 
       {/* Área principal */}
       <div
-        className="flex flex-1 flex-col transition-all duration-300"
-        style={{ marginLeft: collapsed ? "5rem" : "16rem" }} // Ajusta conforme w-20 ou w-64 da Sidebar
+        className={`flex flex-1 flex-col transition-all duration-300
+          ml-0 md:ml-${collapsed ? "20" : "64"} // Tailwind: w-20 ou w-64 da Sidebar
+        `}
       >
         <Topbar />
 
