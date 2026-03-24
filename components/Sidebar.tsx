@@ -87,7 +87,7 @@ export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
     z-40
     transition-all duration-300 transform
     w-full                 /* mobile: ocupa 100% */
-    ${collapsed ? "-translate-x-full md:w-20" : "translate-x-0 md:w-64"}
+    ${collapsed ? "-translate-x-full md:w-15" : "translate-x-0 md:w-64"}
     md:translate-x-0       /* desktop: nunca some */
   `}
   style={{
