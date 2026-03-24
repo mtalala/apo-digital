@@ -6,7 +6,7 @@ import { Program, Coordenador, Activity } from "@/types/types";
 import programsData from "@/data/programs";
 import coordenadoresData from "@/data/coordenadores";
 import activitiesData from "@/data/activities";
-import { UploadCloud } from "lucide-react";
+import { UploadCloud, FileText } from "lucide-react";
 
 export default function SolicitacoesPage() {
   // Form state
@@ -18,7 +18,7 @@ export default function SolicitacoesPage() {
   const [semestre, setSemestre] = useState("");
   const [codigoApo, setCodigoApo] = useState("");
   const [selectedActivities, setSelectedActivities] = useState<number[]>([]);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Dados carregados (mock / futuro API)
@@ -31,7 +31,6 @@ export default function SolicitacoesPage() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        // Dados locais por enquanto
         setPrograms(programsData);
         setCoordenadores(coordenadoresData);
         setActivities(activitiesData);
@@ -51,10 +50,16 @@ export default function SolicitacoesPage() {
     );
   };
 
+  // Upload múltiplo
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setSelectedFile(e.target.files[0]);
-    }
+    const files = e.target.files;
+    if (!files) return;
+
+    setSelectedFiles(prev => [...prev, ...Array.from(files)]);
+  };
+
+  const removeFile = (index: number) => {
+    setSelectedFiles(prev => prev.filter((_, i) => i !== index));
   };
 
   const totalPoints = selectedActivities.reduce((acc, id) => {
@@ -77,7 +82,7 @@ export default function SolicitacoesPage() {
       atividadesIds: selectedActivities,
       totalPoints,
       dataEnvio: new Date().toISOString(),
-      file: selectedFile, // ainda só em memória
+      files: selectedFiles,
     };
 
     console.log("Payload a enviar:", payload);
@@ -85,6 +90,7 @@ export default function SolicitacoesPage() {
     setTimeout(() => {
       setIsSubmitting(false);
       alert("Formulário enviado com sucesso! (mock)");
+
       // Limpar formulário
       setProgram("");
       setMatricula("");
@@ -94,7 +100,7 @@ export default function SolicitacoesPage() {
       setSemestre("");
       setCodigoApo("");
       setSelectedActivities([]);
-      setSelectedFile(null);
+      setSelectedFiles([]);
     }, 1000);
   };
 
@@ -215,24 +221,44 @@ export default function SolicitacoesPage() {
           <p className="mt-2 font-medium">Total de pontos: {totalPoints}</p>
         </div>
 
-        {/* Upload de Arquivo Profissional */}
+        {/* Upload de Arquivos Profissional */}
         <div>
-          <label className="block mb-1 font-medium">Anexar arquivo</label>
+          <label className="block mb-1 font-medium">Anexar arquivos</label>
           <label
             htmlFor="file-upload"
             className="flex flex-col items-center justify-center border-2 border-dashed border-gray-400 rounded-lg p-6 cursor-pointer hover:border-red-500 transition-colors"
           >
             <UploadCloud className="w-10 h-10 text-gray-500 mb-2" />
-            <span className="text-gray-600">
-              {selectedFile ? selectedFile.name : "Clique ou arraste o arquivo aqui"}
-            </span>
+            <span className="text-gray-600">Clique ou arraste os arquivos aqui</span>
             <input
               id="file-upload"
               type="file"
               onChange={handleFileChange}
+              multiple
               className="hidden"
             />
           </label>
+
+          {selectedFiles.length > 0 && (
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+              {selectedFiles.map((file, index) => (
+                <div
+                  key={index}
+                  className="flex items-center space-x-2 border border-gray-300 rounded p-2 bg-white shadow-sm"
+                >
+                  <FileText className="w-5 h-5 text-gray-500" />
+                  <span className="truncate">{file.name}</span>
+                  <button
+                    type="button"
+                    onClick={() => removeFile(index)}
+                    className="ml-auto text-red-500 hover:text-red-700 font-bold"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Submit */}
