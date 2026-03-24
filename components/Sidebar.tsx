@@ -18,8 +18,12 @@ interface User {
   avatar: string; // URL da imagem
 }
 
-export default function Sidebar() {
-  const [collapsed, setCollapsed] = useState(false);
+interface SidebarProps {
+  collapsed: boolean;
+  setCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
   const [user, setUser] = useState<User | null>(null);
   const pathname = usePathname();
 

@@ -6,6 +6,7 @@ import { Program, Coordenador, Activity } from "@/types/types";
 import programsData from "@/data/programs";
 import coordenadoresData from "@/data/coordenadores";
 import activitiesData from "@/data/activities";
+import { UploadCloud } from "lucide-react";
 
 export default function SolicitacoesPage() {
   // Form state
@@ -17,6 +18,7 @@ export default function SolicitacoesPage() {
   const [semestre, setSemestre] = useState("");
   const [codigoApo, setCodigoApo] = useState("");
   const [selectedActivities, setSelectedActivities] = useState<number[]>([]);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Dados carregados (mock / futuro API)
@@ -33,16 +35,6 @@ export default function SolicitacoesPage() {
         setPrograms(programsData);
         setCoordenadores(coordenadoresData);
         setActivities(activitiesData);
-
-        // FUTURAMENTE: substituir por fetch de API
-        // const [programRes, coordRes, activityRes] = await Promise.all([
-        //   fetch("/api/programs"),
-        //   fetch("/api/coordenadores"),
-        //   fetch("/api/activities"),
-        // ]);
-        // setPrograms(await programRes.json());
-        // setCoordenadores(await coordRes.json());
-        // setActivities(await activityRes.json());
       } catch (error) {
         console.error("Erro ao carregar dados:", error);
       } finally {
@@ -57,6 +49,12 @@ export default function SolicitacoesPage() {
     setSelectedActivities(prev =>
       prev.includes(id) ? prev.filter(a => a !== id) : [...prev, id]
     );
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setSelectedFile(e.target.files[0]);
+    }
   };
 
   const totalPoints = selectedActivities.reduce((acc, id) => {
@@ -79,9 +77,9 @@ export default function SolicitacoesPage() {
       atividadesIds: selectedActivities,
       totalPoints,
       dataEnvio: new Date().toISOString(),
+      file: selectedFile, // ainda só em memória
     };
 
-    // Simula envio para API futura
     console.log("Payload a enviar:", payload);
 
     setTimeout(() => {
@@ -96,6 +94,7 @@ export default function SolicitacoesPage() {
       setSemestre("");
       setCodigoApo("");
       setSelectedActivities([]);
+      setSelectedFile(null);
     }, 1000);
   };
 
@@ -200,7 +199,7 @@ export default function SolicitacoesPage() {
         {/* Atividades */}
         <div>
           <label className="block mb-2 font-medium">Atividades desenvolvidas</label>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-96 overflow-y-auto border border-gray-300 dark:border-white/[.145] p-2 rounded">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-96 overflow-y-auto border border-gray-300 p-2 rounded">
             {activities.map(a => (
               <label key={a.id} className="flex items-center space-x-2">
                 <input
@@ -214,6 +213,26 @@ export default function SolicitacoesPage() {
             ))}
           </div>
           <p className="mt-2 font-medium">Total de pontos: {totalPoints}</p>
+        </div>
+
+        {/* Upload de Arquivo Profissional */}
+        <div>
+          <label className="block mb-1 font-medium">Anexar arquivo</label>
+          <label
+            htmlFor="file-upload"
+            className="flex flex-col items-center justify-center border-2 border-dashed border-gray-400 rounded-lg p-6 cursor-pointer hover:border-red-500 transition-colors"
+          >
+            <UploadCloud className="w-10 h-10 text-gray-500 mb-2" />
+            <span className="text-gray-600">
+              {selectedFile ? selectedFile.name : "Clique ou arraste o arquivo aqui"}
+            </span>
+            <input
+              id="file-upload"
+              type="file"
+              onChange={handleFileChange}
+              className="hidden"
+            />
+          </label>
         </div>
 
         {/* Submit */}
