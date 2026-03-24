@@ -33,7 +33,7 @@ export default function NotificacoesPage() {
         <button
           onClick={markAllAsRead}
           aria-label="Marcar todas como lidas"
-          className="fixed top-24 right-6 z-50 p-2 text-red-600 hover:text-red-700 rounded-full transition-colors duration-300"
+          className="fixed top-24 right-6 z-30 p-2 text-red-600 hover:text-red-700 rounded-full transition-colors duration-300"
         >
           <CheckCheck className="w-6 h-6" />
         </button>
