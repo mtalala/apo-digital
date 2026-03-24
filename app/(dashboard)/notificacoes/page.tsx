@@ -73,7 +73,7 @@ export default function NotificacoesPage() {
 
                 {/* Ações mobile: ícone olho + pontinho de não lido */}
                 {!n.read && (
-                    <div className="ml-4 flex flex-col items-center gap-1 sm:hidden">
+                    <div className="ml-4 flex flex-col items-center gap-1">
                     <span className="w-2 h-2 rounded-full bg-red-600" />
                     <button
                         onClick={() => markAsRead(n.id)}
