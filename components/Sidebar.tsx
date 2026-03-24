@@ -76,21 +76,20 @@ export default function Sidebar() {
         {collapsed ? <Columns className="w-8 h-8" strokeWidth={1} /> : <X className="w-8 h-8" strokeWidth={1} />}
       </button>
 
-      <aside
-        className={`
-          fixed top-0 left-0 h-screen flex flex-col
-          border-r border-gray-200 bg-white
-          overflow-hidden z-40
-          md:relative md:translate-x-0
-          ${collapsed ? "md:w-15" : "md:w-64"}
-          transition-all duration-300
-          w-full transform
-          ${collapsed ? "-translate-x-full" : "translate-x-0"}
-        `}
-        style={{
-          paddingTop: "env(safe-area-inset-top)",
-        }}
-      >
+    <aside
+  className={`
+    fixed top-0 left-0 h-screen flex flex-col
+    border-r border-gray-200 bg-white
+    z-40
+    transition-all duration-300 transform
+    w-full                 /* mobile: ocupa 100% */
+    ${collapsed ? "-translate-x-full md:w-20" : "translate-x-0 md:w-64"}
+    md:translate-x-0       /* desktop: nunca some */
+  `}
+  style={{
+    paddingTop: "env(safe-area-inset-top)",
+  }}
+>
         {/* Top */}
         <div
           className={`flex items-center p-4 ${
