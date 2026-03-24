@@ -111,7 +111,7 @@ export default function SolicitacoesPage() {
           <select
             value={program}
             onChange={e => setProgram(Number(e.target.value))}
-            className="w-full border rounded p-2"
+            className="w-full border border-neutral-300 rounded p-2"
             required
           >
             <option value="">-- Selecione --</option>
@@ -128,7 +128,7 @@ export default function SolicitacoesPage() {
             type="text"
             value={matricula}
             onChange={e => setMatricula(e.target.value)}
-            className="w-full border rounded p-2"
+            className="w-full border border-neutral-300 rounded p-2"
             required
           />
         </div>
@@ -140,7 +140,7 @@ export default function SolicitacoesPage() {
             type="text"
             value={nome}
             onChange={e => setNome(e.target.value)}
-            className="w-full border rounded p-2"
+            className="w-full border border-neutral-300 rounded p-2"
             required
           />
         </div>
@@ -152,7 +152,7 @@ export default function SolicitacoesPage() {
             type="text"
             value={orientador}
             onChange={e => setOrientador(e.target.value)}
-            className="w-full border rounded p-2"
+            className="w-full border border-neutral-300 rounded p-2"
             required
           />
         </div>
@@ -163,7 +163,7 @@ export default function SolicitacoesPage() {
           <select
             value={coordenador}
             onChange={e => setCoordenador(Number(e.target.value))}
-            className="w-full border rounded p-2"
+            className="w-full border border-neutral-300 rounded p-2"
             required
           >
             <option value="">-- Selecione --</option>
@@ -180,7 +180,7 @@ export default function SolicitacoesPage() {
             type="text"
             value={semestre}
             onChange={e => setSemestre(e.target.value)}
-            className="w-full border rounded p-2"
+            className="w-full border border-neutral-300 rounded p-2"
             required
           />
         </div>
@@ -192,7 +192,7 @@ export default function SolicitacoesPage() {
             type="text"
             value={codigoApo}
             onChange={e => setCodigoApo(e.target.value)}
-            className="w-full border rounded p-2"
+            className="w-full border border-neutral-300 rounded p-2"
             required
           />
         </div>
@@ -200,7 +200,7 @@ export default function SolicitacoesPage() {
         {/* Atividades */}
         <div>
           <label className="block mb-2 font-medium">Atividades desenvolvidas</label>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-96 overflow-y-auto border p-2 rounded">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-96 overflow-y-auto border border-neutral-300 dark:border-white/[.145] p-2 rounded">
             {activities.map(a => (
               <label key={a.id} className="flex items-center space-x-2">
                 <input
