@@ -6,7 +6,7 @@ import { Plus } from "lucide-react";
 export default function NewRequestFab() {
   return (
     <Link
-      href="/solicitacoes"
+      href="/formulario"
       aria-label="Criar nova solicitação"
       className="
         fixed
