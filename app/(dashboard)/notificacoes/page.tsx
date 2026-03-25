@@ -45,7 +45,7 @@ export default function NotificacoesPage() {
         <div className="flex flex-col space-y-4">
             {/* Header */}
             <div>
-            <h1 className="text-2xl font-semibold text-gray-900">Notificações</h1>
+            <h1 className="text-4xl font-semibold text-gray-900">Notificações</h1>
             <p className="text-sm text-gray-500">
                 Acompanhe as atualizações das suas solicitações
             </p>

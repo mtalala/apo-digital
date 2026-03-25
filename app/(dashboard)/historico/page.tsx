@@ -14,7 +14,7 @@ export default function HistoricoPage() {
     <main className="flex-1 px-2 sm:px-4 py-2 sm:py-4">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-gray-900">Histórico</h1>
+        <h1 className="text-4xl font-semibold text-gray-900">Histórico</h1>
       </div>
 
       {/* Grid */}
