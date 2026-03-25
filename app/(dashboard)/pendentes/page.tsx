@@ -1,9 +1,22 @@
-// src/app/(dashboard)/pendentes/page.tsx
+"use client";
+
+import { useEffect, useState } from "react";
+
 import RequestCard from "@/components/RequestCard";
+import RequestCardSkeleton from "@/components/RequestCardSkeleton";
+
 import { apos } from "@/data/apos";
 import { getApoVisualStatus } from "@/domain/apoVisualStatus";
 
 export default function PendentesPage() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // simulação de loading (remove quando virar API)
+    const timer = setTimeout(() => setIsLoading(false), 700);
+    return () => clearTimeout(timer);
+  }, []);
+
   const pendentes = apos.filter(
     (apo) => getApoVisualStatus(apo.status) === "PENDENTE"
   );
@@ -17,10 +30,14 @@ export default function PendentesPage() {
         </p>
       </header>
 
-      {pendentes.length === 0 ? (
-        <p className="text-gray-400">
-          Nenhuma APO pendente.
-        </p>
+      {isLoading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <RequestCardSkeleton key={i} />
+          ))}
+        </div>
+      ) : pendentes.length === 0 ? (
+        <p className="text-gray-400">Nenhuma APO pendente.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {pendentes.map((apo) => (

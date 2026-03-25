@@ -1,12 +1,24 @@
-// src/app/(dashboard)/em-andamento/page.tsx
+"use client";
+
+import { useEffect, useState } from "react";
+
 import RequestCard from "@/components/RequestCard";
+import RequestCardSkeleton from "@/components/RequestCardSkeleton";
+
 import { apos } from "@/data/apos";
 import { getApoVisualStatus } from "@/domain/apoVisualStatus";
 
 export default function EmAndamentoPage() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // simulação de loading (remove quando virar API)
+    const timer = setTimeout(() => setIsLoading(false), 700);
+    return () => clearTimeout(timer);
+  }, []);
+
   const emAndamento = apos.filter(
-    (apo) =>
-      getApoVisualStatus(apo.status) === "EM_ANDAMENTO"
+    (apo) => getApoVisualStatus(apo.status) === "EM_ANDAMENTO"
   );
 
   return (
@@ -18,10 +30,14 @@ export default function EmAndamentoPage() {
         </p>
       </header>
 
-      {emAndamento.length === 0 ? (
-        <p className="text-gray-400">
-          Nenhuma APO em andamento.
-        </p>
+      {isLoading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <RequestCardSkeleton key={i} />
+          ))}
+        </div>
+      ) : emAndamento.length === 0 ? (
+        <p className="text-gray-400">Nenhuma APO em andamento.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {emAndamento.map((apo) => (

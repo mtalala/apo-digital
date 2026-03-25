@@ -1,8 +1,20 @@
-// src/app/historico/page.tsx
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
+
+import RequestCardSkeleton from "@/components/RequestCardSkeleton";
 import { apos } from "@/data/apos";
 
 export default function HistoricoPage() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // simulação de loading (remover quando virar API)
+    const timer = setTimeout(() => setIsLoading(false), 700);
+    return () => clearTimeout(timer);
+  }, []);
+
   const completedApos = apos
     .filter(
       (apo) =>
@@ -22,8 +34,14 @@ export default function HistoricoPage() {
         <h1 className="text-4xl font-semibold text-gray-900">Histórico</h1>
       </div>
 
-      {/* Grid */}
-      {completedApos.length === 0 ? (
+      {/* Conteúdo */}
+      {isLoading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[1400px] mx-auto">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <RequestCardSkeleton key={i} />
+          ))}
+        </div>
+      ) : completedApos.length === 0 ? (
         <p className="text-gray-500 text-sm">Nenhuma APO concluída.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[1400px] mx-auto">
