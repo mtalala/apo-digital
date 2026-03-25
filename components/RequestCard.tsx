@@ -11,7 +11,7 @@ import { getApoVisualStatusColor } from "@/domain/apoVisualStatusColor";
 import { APO_DECORATIVE_COLORS } from "@/data/apoDecorativeColors";
 
 interface Props {
-  apo?: Apo; // defensivo
+  apo?: Apo;
 }
 
 /**
@@ -40,6 +40,11 @@ export default function RequestCard({ apo }: Props) {
   const statusColor = getApoVisualStatusColor(visualStatus);
   const decorativeColor = getDecorativeColorByApoId(apo.id);
 
+  const mainActivityLabel =
+    apo.activities.length > 0
+      ? apo.activities[0].label
+      : "Atividade não informada";
+
   return (
     <div
       onClick={() => router.push(`/apos/${apo.id}`)}
@@ -63,8 +68,9 @@ export default function RequestCard({ apo }: Props) {
           APO
         </span>
 
+        {/* 🔹 ATIVIDADE (em vez do código) */}
         <h3 className="font-semibold leading-snug text-gray-900">
-          {apo.codigoApo}
+          {mainActivityLabel}
         </h3>
 
         <p className="text-sm text-gray-500">
