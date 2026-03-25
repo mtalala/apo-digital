@@ -34,7 +34,7 @@ export default function DashboardLayout({
         <Topbar sidebarWidth={sidebarWidth} />
 
         {/* Conteúdo principal */}
-        <main className="flex-1 pt-14 p-6 relative bg-gray-50 transition-all duration-300">
+        <main className="flex-1 pt-20 p-6 relative bg-gray-50 transition-all duration-300">
           {children}
           {showFab && <NewRequestFab />}
         </main>
