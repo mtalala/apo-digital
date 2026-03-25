@@ -88,6 +88,7 @@ export const apos: Apo[] = [
     orientador: "Prof. Eduardo Ramos",
     coordenador: "Profa. Maria Silva",
     status: "APROVADA",
+    completedAt: "2025-01-20",
     activities: [
       { label: "Publicação de Livro", points: 50 },
       { label: "Participação em Comissão Acadêmica", points: 10 },
@@ -124,6 +125,7 @@ export const apos: Apo[] = [
     orientador: "Profa. Juliana Costa",
     coordenador: "Prof. Roberto Mendes",
     status: "REJEITADA",
+    completedAt: "2025-02-02",
     activities: [
       { label: "Participação em Evento Interno", points: 5 },
     ],

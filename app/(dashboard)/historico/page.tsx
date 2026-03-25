@@ -1,9 +1,14 @@
 // src/app/historico/page.tsx
-import { requests } from "@/data/requests";
+import Link from "next/link";
+import { apos } from "@/data/apos";
 
 export default function HistoricoPage() {
-  const historyRequests = requests
-    .filter((req) => req.status === "Concluída" && req.completedAt)
+  const completedApos = apos
+    .filter(
+      (apo) =>
+        (apo.status === "APROVADA" || apo.status === "REJEITADA") &&
+        apo.completedAt
+    )
     .sort(
       (a, b) =>
         new Date(b.completedAt!).getTime() -
@@ -18,36 +23,46 @@ export default function HistoricoPage() {
       </div>
 
       {/* Grid */}
-      {historyRequests.length === 0 ? (
-        <p className="text-gray-500 text-sm">Nenhuma solicitação concluída.</p>
+      {completedApos.length === 0 ? (
+        <p className="text-gray-500 text-sm">Nenhuma APO concluída.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[1400px] mx-auto">
-          {historyRequests.map((request) => (
-            <div
-              key={request.id}
-              className="bg-white rounded-xl border border-gray-200 p-4 w-full"
-            >
-              {/* Categoria */}
-              <span
-                className={`inline-block text-xs font-semibold text-white px-2 py-1 rounded ${request.color}`}
-              >
-                {request.category}
-              </span>
+          {completedApos.map((apo) => (
+            <Link key={apo.id} href={`/apos/${apo.id}`} className="group">
+              <article className="bg-white rounded-xl border border-gray-200 p-4 w-full transition hover:shadow-md hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                {/* Código da APO */}
+                <span className="inline-block text-xs font-semibold text-gray-600">
+                  {apo.codigoApo}
+                </span>
 
-              {/* Título */}
-              <h2 className="mt-3 text-sm font-medium text-gray-900">
-                {request.title}
-              </h2>
+                {/* Nome do aluno */}
+                <h2 className="mt-2 text-sm font-medium text-gray-900 group-hover:underline">
+                  {apo.nome}
+                </h2>
 
-              {/* Nível */}
-              <p className="mt-1 text-xs text-gray-500">{request.level}</p>
+                {/* Programa / Semestre */}
+                <p className="mt-1 text-xs text-gray-500">
+                  {apo.program} — {apo.semestre}
+                </p>
 
-              {/* Data */}
-              <p className="mt-4 text-xs text-gray-400">
-                Concluído em{" "}
-                {new Date(request.completedAt!).toLocaleDateString("pt-BR")}
-              </p>
-            </div>
+                {/* Status final */}
+                <p
+                  className={`mt-2 text-xs font-semibold ${
+                    apo.status === "APROVADA"
+                      ? "text-green-600"
+                      : "text-red-600"
+                  }`}
+                >
+                  {apo.status === "APROVADA" ? "Aprovada" : "Rejeitada"}
+                </p>
+
+                {/* Data */}
+                <p className="mt-4 text-xs text-gray-400">
+                  Concluída em{" "}
+                  {new Date(apo.completedAt!).toLocaleDateString("pt-BR")}
+                </p>
+              </article>
+            </Link>
           ))}
         </div>
       )}

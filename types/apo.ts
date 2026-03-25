@@ -20,6 +20,12 @@ export interface Apo {
 
   status: ApoStatus;
 
+  /**
+   * Data de conclusão da APO.
+   * Presente apenas quando o status é final (APROVADA ou REJEITADA).
+   */
+  completedAt?: string;
+
   activities: {
     label: string;
     points: number;
